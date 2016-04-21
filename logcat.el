@@ -355,8 +355,13 @@ filter log messages.  If more than one rule matches a log message, \
 the last one to match wins.")
 
 (defface logcat-error
-  '((t :inherit error))
+  '((t :inherit error :foreground "red"))
   "Face used to highlight logcat error-level messages."
+  :group 'logcat)
+
+(defface logcat-fatal
+  '((t :inherit logcat-error :background "black"))
+  "Face used to highlight logcat fatal-level messages."
   :group 'logcat)
 
 (defface logcat-warning
@@ -503,6 +508,8 @@ the last one to match wins.")
                         (char-after)))))
       (cond ((eq level ?E)
              (font-lock-apply-highlight '(6 'logcat-error)))
+            ((eq level ?F)
+             (font-lock-apply-highlight '(6 'logcat-fatal)))
             ((eq level ?W)
              (font-lock-apply-highlight '(6 'logcat-warning)))
             ((eq level ?I)
