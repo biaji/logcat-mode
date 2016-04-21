@@ -395,7 +395,7 @@ the last one to match wins.")
     " "
     (= 2 (in "0-9")) ":"
     (= 2 (in "0-9")) ":"
-    (= 2 (in "0-9")) "." (= 3 (in "0-9"))))
+    (= 2 (in "0-9")) "." (0+ (in "0-9"))))
 
   (defconst logcat-brief-format
     (rx bol
@@ -1152,7 +1152,7 @@ Return a list (HIGH LOW USEC) as in `current-time'."
          (raw-header-length (let ((rv (logcat--read-u16)))
                               (or logcat--cached-header-length
                                   (setf logcat--cached-header-length
-                                        (if (<= 20 rv 28) rv 0)))))
+                                        (if (or (<= 20 rv) (<= rv 28)) rv 0)))))
          (header-length
           (if (zerop raw-header-length) 20 raw-header-length))
          (payload-start (+ start header-length))
